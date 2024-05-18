@@ -5,7 +5,6 @@ import AppModal from "../components/ui/AppModal";
 import AppTable from "../components/ui/AppTable";
 import { useDeleteProductMutation, useGetProductQuery } from "../redux/features/products/productApi";
 import { Link } from "react-router-dom";
-import { useAddSaleMutation } from "../redux/features/sales/saleApi";
 import AppPopover from "../components/ui/AppPopover";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import SaleProduct from "../components/product/SaleProduct";
