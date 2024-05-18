@@ -98,7 +98,6 @@ const SignUp = () => {
               error={errors.email}
             />
 
-
             <div>
               <AppFormInput
                 name="password"
@@ -110,7 +109,7 @@ const SignUp = () => {
                 error={errors.password}
               />
               <div className="text-textBlack ml-5 text-xs mt-2 space-y-1">
-                <p className="list-item">Minimum length of 3-30 characters</p>
+                <p className="list-item">Minimum length of 8-30 characters</p>
                 <p className="list-item">
                   Only lowercase, numeric and symbols allowed
                 </p>

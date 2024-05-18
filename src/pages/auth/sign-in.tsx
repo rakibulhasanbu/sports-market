@@ -79,16 +79,16 @@ const SignIn = () => {
               name="password"
               required={true}
               register={register}
-              type="text"
+              type="password"
               label="Password"
               placeholder="Type your Password"
               error={errors.password}
             />
 
             <div className="flex items-center justify-end text-xs text-textGrey hover:text-primary lg:text-sm">
-              <Link to={"/auth/forgot-password"}>
-                <p>Forgot Password?</p>{" "}
-              </Link>
+              {/* <Link to={"/auth/forgot-password"}> */}
+              <p>Forgot Password?</p>{" "}
+              {/* </Link> */}
             </div>
 
             {isLoading ? (

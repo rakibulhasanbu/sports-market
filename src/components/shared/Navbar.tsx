@@ -15,6 +15,7 @@ function Navbar() {
   const menuItems = (
     <>
       <li>
+        <img src="/favicon.png" alt="" />
         <Link className="text-2xl font-semibold text-primary" to="/">Sports Market</Link>
       </li>
       {token ? (
