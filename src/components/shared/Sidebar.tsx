@@ -1,8 +1,7 @@
 import { ImStatsDots } from "react-icons/im";
 import { Link, useLocation } from "react-router-dom";
-import { RxDashboard } from "react-icons/rx";
 import { TbBrandProducthunt } from "react-icons/tb";
-import { MdOutlineAddShoppingCart, MdOutlineShoppingCartCheckout } from "react-icons/md";
+import { MdOutlineAddShoppingCart } from "react-icons/md";
 
 const Sidebar = () => {
   const { pathname } = useLocation();

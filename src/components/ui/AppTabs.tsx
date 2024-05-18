@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 
 type TAppTabs = {
     tabs: {

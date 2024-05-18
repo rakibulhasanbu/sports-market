@@ -14,7 +14,7 @@ type TAppFormInputProps = {
     readOnly?: boolean
 }
 
-const AppFormInput = ({ label, defaultValue, readOnly, error, placeholder, type, required, name, register }: TAppFormInputProps) => {
+const AppFormInput = ({ label, defaultValue, readOnly, error, type, required, name, register }: TAppFormInputProps) => {
     const [show, setShow] = useState(false);
 
     return (

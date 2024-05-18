@@ -1,7 +1,7 @@
-import { apiSlice } from "../../api/baseApi";
+import { baseApi } from "../../api/baseApi";
 import { tagTypes } from "../../api/tagTypesList";
 
-export const userApi = apiSlice.injectEndpoints({
+export const userApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getUsers: builder.query({
       query: (query) => {

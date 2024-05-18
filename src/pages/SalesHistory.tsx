@@ -5,7 +5,7 @@ import "chart.js/auto";
 import { useGetSalesHistoryQuery } from "../redux/features/sales/saleApi";
 
 const SalesHistory = () => {
-    const { data, isLoading, isError } = useGetSalesHistoryQuery(undefined);
+    const { data } = useGetSalesHistoryQuery(undefined);
 
     const tabs = [
         { value: "daily", label: "Daily" },

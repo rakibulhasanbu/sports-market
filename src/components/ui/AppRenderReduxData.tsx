@@ -1,11 +1,10 @@
 import React from "react";
 import Loading from "./AppLoading";
-import { UseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { Empty } from "antd";
 import AppErrorComponent from "./AppErrorComponent";
 
 type Props = {
-  queryData: UseQueryHookResult<any>;
+  queryData: any;
   showData: (data: any) => React.ReactNode;
   renderErrorComponent?: (error: any) => React.ReactNode;
   loadingComponent?: React.ReactNode;

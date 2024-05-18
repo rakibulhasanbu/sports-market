@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface IInitialState {}
 
@@ -10,7 +10,7 @@ export const userSlice = createSlice({
   // createSlice will infer the state type from the initialState argument
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<any>) => {},
+    setUser: () => {},
   },
 });
 

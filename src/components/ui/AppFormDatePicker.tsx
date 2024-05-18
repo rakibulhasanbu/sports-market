@@ -30,7 +30,7 @@ const AppFormDatePicker = ({ control, name, label, placeholder }: TAppDatePicker
                             name={field.name}
                             onBlur={field.onBlur}
                             value={field.value ? field.value : null}
-                            onChange={(date, dateString) => {
+                            onChange={(date) => {
                                 field.onChange(date);
                             }}
                         />

@@ -29,7 +29,6 @@ const AppFormSelect = ({
     options,
     label,
     defaultValue,
-    required,
     handleChange,
     className,
 }: SelectFieldProps) => {
