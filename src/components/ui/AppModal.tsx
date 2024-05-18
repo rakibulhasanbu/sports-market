@@ -47,7 +47,7 @@ const AppModal = ({
         maskClosable={closeable}
         title={
           <>
-            <h1 className="title">{title}</h1>
+            <h1 className="text-xl font-medium">{title}</h1>
             {subTitle &&
               <p className="text-textGrey text-xs md:text-sm font-normal w-fit">{subTitle}</p>
             }

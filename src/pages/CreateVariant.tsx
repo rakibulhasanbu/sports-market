@@ -5,7 +5,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import AppLoading from "../components/ui/AppLoading";
 import AppFormInput from "../components/ui/AppFormInput";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { useGetProductByIdQuery, useUpdatedProductMutation } from "../redux/features/products/productApi";
+import { useDuplicateProductMutation, useGetProductByIdQuery } from "../redux/features/products/productApi";
 import { useEffect } from "react";
 
 type TInputs = {
@@ -23,13 +23,13 @@ type TInputs = {
   releaseDate: Date;
 };
 
-const EditProduct = () => {
+const CreateVariant = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const { data } = useGetProductByIdQuery(id);
 
-  const [updateProduct, { isLoading }] = useUpdatedProductMutation();
+  const [duplicateProduct, { isLoading }] = useDuplicateProductMutation();
 
   const {
     register,
@@ -40,10 +40,11 @@ const EditProduct = () => {
 
   const onSubmit: SubmitHandler<TInputs> = async (data) => {
     const submitData = {
-      productData: data, id
+      productData: data
+      , id
     }
-
-    await updateProduct(submitData).unwrap().then((res: { success: any, message: any; }) => {
+    console.log(submitData);
+    await duplicateProduct(submitData).unwrap().then((res: { success: any, message: any; }) => {
       if (!res.success) {
         toast.error(res.message || "Something went wrong");
       }
@@ -87,7 +88,7 @@ const EditProduct = () => {
         isLoading ? <AppLoading />
           :
           <div className="bg-[#F8F8F8] p-3 md:p-4 rounded-2xl mt-4">
-            <h1 className="md:text-xl font-medium">Update Product</h1>
+            <h1 className="md:text-xl font-medium">Create Variant</h1>
             <form className="space-y-2 md:space-y-4 pt-4 pb-2" onSubmit={handleSubmit(onSubmit)}>
 
               <div className="grid grid-cols-2 md:grid-cols-2 gap-2 md:gap-4">
@@ -199,7 +200,7 @@ const EditProduct = () => {
                   </button>
                 ) : (
                   <button type="submit" className="roundedBtn cursor-pointer">
-                    Update Product
+                    Create Variant
                   </button>
                 )}
               </div>
@@ -211,4 +212,4 @@ const EditProduct = () => {
   );
 };
 
-export default EditProduct;
+export default CreateVariant;

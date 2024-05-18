@@ -6,10 +6,12 @@ import AppTable from "../components/ui/AppTable";
 import { useDeleteProductMutation, useGetProductQuery } from "../redux/features/products/productApi";
 import { Link } from "react-router-dom";
 import { useAddSaleMutation } from "../redux/features/sales/saleApi";
+import AppPopover from "../components/ui/AppPopover";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import SaleProduct from "../components/product/SaleProduct";
 
 const ManageProducts = () => {
     const [_page, setPage] = useState(1)
-    const [modalQuantity, setQuantity] = useState(0);
 
     const [filterOptions, setFilterOptions] = useState({
         priceRange: { min: 0, max: 1000 },
@@ -23,7 +25,7 @@ const ManageProducts = () => {
         size: "",
         weight: "",
     });
-    console.log(filterOptions);
+
 
     // Function to update filter options
     const handleFilterChange = (key: any, value: any) => {
@@ -76,33 +78,6 @@ const ManageProducts = () => {
     const infoQuery = useGetProductQuery(queryParams);
 
     const [deleteUser, { isError, error, isLoading, isSuccess }] = useDeleteProductMutation();
-    const [addSale] = useAddSaleMutation();
-
-    const handleSale = async (name: string, id: string) => {
-        const submitData = {
-            quantity: +modalQuantity,
-            buyerName: name,
-            saleDate: new Date(),
-            productId: id,
-        }
-
-        await addSale(submitData).unwrap().then((res: {
-            data: any; success: any; errorMessage: any;
-        }) => {
-            if (!res.success) {
-                toast.error(res?.data?.message || "Something went wrong");
-            }
-            toast.success("product Buy successful!");
-            setQuantity(0)
-        }).catch((res: {
-            data: any;
-            errorMessage: string; success: any; message: any;
-        }) => {
-            if (!res.success) {
-                toast.error(res?.data?.message || "Something went wrong");
-            }
-        });
-    };
 
     useEffect(() => {
         if (isError) {
@@ -112,9 +87,7 @@ const ManageProducts = () => {
         }
     }, [isError, error, isLoading, isSuccess])
 
-    const handleChange = (e: any) => {
-        setQuantity(e?.target?.value)
-    }
+
 
     const columns = [
         {
@@ -151,11 +124,6 @@ const ManageProducts = () => {
             className: "min-w-[115px]",
         },
         {
-            title: 'Size',
-            dataIndex: 'size',
-            className: "min-w-[115px]",
-        },
-        {
             title: 'Material',
             dataIndex: 'material',
             className: "min-w-[115px]",
@@ -171,54 +139,65 @@ const ManageProducts = () => {
             className: "min-w-[115px]",
         },
         {
-            title: 'Weight',
-            dataIndex: 'weight',
-            className: "min-w-[115px]",
-        },
-        {
             title: 'Action',
             dataIndex: '',
-            className: "min-w-[185px]",
+            className: "min-w-[85px]",
             render: (_text: any, record: any) => {
                 return (
-                    <div className='flex items-center justify-evenly gap-1'>
+                    <div className=''>
+                        <AppPopover
+                            key={record?._id}
+                            children={
+                                <div className='flex flex-col gap-2.5'>
+                                    <AppModal button={
+                                        <button className="text-xs font-medium w-full px-4 py-1 rounded-full text-gray-700 bg-gray-200">View Details</button>
+                                    }
+                                        cancelButtonTitle="Close"
+                                        title="Product details"
+                                    >
+                                        <div className=' min-w-96 max-w-sm space-y-2 pt-2'>
+                                            <img src={record?.imageUrl} alt="" className="rounded-md object-cover w-60 h-36 mx-auto" />
+                                            <div className='grid grid-cols-2 gap-x-4 gap-y-2 '>
 
-                        <AppModal button={
-                            <button className="text-xs font-medium px-4 py-1 rounded-full text-white bg-primary">Buy</button>
-                        }
-                            cancelButtonTitle="No, Don’t"
-                            primaryButtonTitle="Yes. Buy"
-                            primaryButtonAction={() => handleSale(record?.name, record?._id)}
-                        >
-                            <div className='max-w-96 space-y-2 pt-2'>
-                                <p className="font-medium">Product Name: {record?.name}</p>
-                                <p className="font-medium">Product Price: {record?.price}</p>
-                                <div className=''>
-                                    <label htmlFor="quantity">Quantity</label>
-                                    <input
-                                        id="quantity"
-                                        type="number"
-                                        value={modalQuantity}
-                                        onChange={handleChange}
-                                        placeholder="Product Quantity"
-                                        className="w-full outline-none border px-2 py-1.5 text-sm md:text-base md:pl-2"
-                                    />
+                                                <p className="font-medium">Product Name: {record?.name}</p>
+                                                <p className="font-medium">Product Price: {record?.price}</p>
+                                                <p className="font-medium">Product Quantity: {record?.quantity}</p>
+                                                <p className="font-medium">Product Type: {record?.type}</p>
+                                                <p className="font-medium">Product Brand: {record?.brand}</p>
+                                                <p className="font-medium">Product Size: {record?.size}</p>
+                                                <p className="font-medium">Product Material: {record?.material}</p>
+                                                <p className="font-medium">Product Color: {record?.color}</p>
+                                                <p className="font-medium">Product Condition: {record?.condition}</p>
+                                                <p className="font-medium">Product Weight: {record?.weight}</p>
+                                            </div>
+
+                                        </div>
+                                    </AppModal>
+
+                                    <SaleProduct record={record} />
+
+                                    <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/create-variant/${record?._id}`}>Create Variant</Link></button>
+                                    <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/edit-product/${record?._id}`}>Update</Link></button>
+
+                                    <AppModal button={
+                                        <button className="text-xs text-white px-4 py-1 rounded-full w-full bg-bgred">Remove</button>}
+                                        cancelButtonTitle="No, Don’t"
+                                        primaryButtonTitle="Yes. Remove"
+                                        primaryButtonAction={() => deleteUser(record?._id)}
+                                    >
+                                        <div className='max-w-80'>
+                                            <p className="text-center text-[#828282] pt-4 text-lg">Are you sure  Remove <span className="text-textDark font-medium">{record?.name}</span> from the user list?</p>
+                                        </div>
+                                    </AppModal>
                                 </div>
-                            </div>
-                        </AppModal>
+                            }
+                            button={
+                                <button>
+                                    <BsThreeDotsVertical className="text-xl" />
+                                </button>
+                            }
+                        />
 
-                        <button className="text-xs font-medium px-4 py-1 rounded-full bg-[#E6E6E7] hover:text-gray-800 "><Link to={`/edit-product/${record?._id}`}>Update</Link></button>
-
-                        <AppModal button={
-                            <button className="text-xs text-white px-4 py-1 rounded-full bg-bgred">Remove</button>}
-                            cancelButtonTitle="No, Don’t"
-                            primaryButtonTitle="Yes. Remove"
-                            primaryButtonAction={() => deleteUser(record?._id)}
-                        >
-                            <div className='max-w-80'>
-                                <p className="text-center text-[#828282] pt-4 text-lg">Are you sure  Remove <span className="text-textDark font-medium">{record?.name}</span> from the user list?</p>
-                            </div>
-                        </AppModal>
                     </div>
                 )
             }
@@ -260,7 +239,7 @@ const ManageProducts = () => {
                 <label>
                     Release Date:
                     <input
-                        type="text"
+                        type="date"
                         className="ml-2 px-2 py-1 border rounded-md sm w-full max-w-xs"
                         value={filterOptions.releaseDate}
                         onChange={(e) =>
@@ -365,7 +344,7 @@ const ManageProducts = () => {
                 infoQuery={infoQuery}
                 setPage={setPage}
                 headerText="products List"
-                inputPlaceholder="Search product"
+
                 button={
                     <Link to={"/add-product"}>
                         <button className="roundedBtn">Add New Product</button>

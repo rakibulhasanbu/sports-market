@@ -7,6 +7,7 @@ import ManageProducts from "../pages/ManageProducts";
 import AddProduct from "../pages/AddProduct";
 import SalesHistory from "../pages/SalesHistory";
 import EditProduct from "../pages/EditProduct";
+import CreateVariant from "../pages/CreateVariant";
 
 const router = createBrowserRouter([
     {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: "/add-product",
                 element: <AddProduct />
+            },
+            {
+                path: "/create-variant/:id",
+                element: <CreateVariant />
             },
             {
                 path: "/edit-product/:id",

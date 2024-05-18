@@ -16,7 +16,7 @@ const saleApi = baseApi.injectEndpoints({
         method: "POST",
         body: saleData,
       }),
-      invalidatesTags: [tagTypes.sale],
+      invalidatesTags: [tagTypes.products],
     }),
   }),
 });
