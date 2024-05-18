@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import { useAddSaleMutation } from "../redux/features/sales/saleApi";
 
 const ManageProducts = () => {
-    const [page, setPage] = useState(1);
+    const [_page, setPage] = useState(1)
     const [modalQuantity, setQuantity] = useState(0);
 
     const [filterOptions, setFilterOptions] = useState({
@@ -78,7 +78,7 @@ const ManageProducts = () => {
     const [deleteUser, { isError, error, isLoading, isSuccess }] = useDeleteProductMutation();
     const [addSale] = useAddSaleMutation();
 
-    const handleSale = async (name: string, price: string, id: string) => {
+    const handleSale = async (name: string, id: string) => {
         const submitData = {
             quantity: +modalQuantity,
             buyerName: name,
@@ -177,9 +177,9 @@ const ManageProducts = () => {
         },
         {
             title: 'Action',
-            dataIndex: 'action',
+            dataIndex: '',
             className: "min-w-[185px]",
-            render: (text: string, record: any) => {
+            render: (_text: any, record: any) => {
                 return (
                     <div className='flex items-center justify-evenly gap-1'>
 
@@ -188,7 +188,7 @@ const ManageProducts = () => {
                         }
                             cancelButtonTitle="No, Don’t"
                             primaryButtonTitle="Yes. Buy"
-                            primaryButtonAction={() => handleSale(record?.name, record?.price, record?._id)}
+                            primaryButtonAction={() => handleSale(record?.name, record?._id)}
                         >
                             <div className='max-w-96 space-y-2 pt-2'>
                                 <p className="font-medium">Product Name: {record?.name}</p>
